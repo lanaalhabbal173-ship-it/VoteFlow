@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "171031787706",
+    "firebase_url": "https://pollingapp-ec325-default-rtdb.firebaseio.com",
+    "project_id": "pollingapp-ec325",
+    "storage_bucket": "pollingapp-ec325.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171031787706:android:a437b0e5dece198c89ea83",
+        "android_client_info": {
+          "package_name": "com.example.polling_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171031787706-tfss1rd9f85urugk1musjt53s4md3b0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxN1L9GtF9OA9gFQQBa2iKUn1CNZGgstE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171031787706-tfss1rd9f85urugk1musjt53s4md3b0d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "171031787706-n32gffquo5l0ol8lb0okr1l0t3en46id.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pollingApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
