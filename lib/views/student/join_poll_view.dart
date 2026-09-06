@@ -91,24 +91,36 @@ class _JoinPollViewState extends State<JoinPollView> {
                     const SizedBox(height: 40),
 
                     Container(
-                      height: 90,
+                      height: 110,
 
-                      width: 90,
+                      width: 110,
+
+                      padding: const EdgeInsets.all(8),
 
                       decoration: BoxDecoration(
                         color: Colors.white,
 
-                        shape: BoxShape.circle,
+                        borderRadius: BorderRadius.circular(30),
 
-                        border: Border.all(color: primary, width: 2),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(.12),
+
+                            blurRadius: 20,
+
+                            offset: const Offset(0, 8),
+                          ),
+                        ],
                       ),
 
-                      child: Icon(
-                        Icons.checklist_rounded,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(22),
 
-                        size: 55,
+                        child: Image.asset(
+                          "assets/images/app_logo.png",
 
-                        color: primary,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
 

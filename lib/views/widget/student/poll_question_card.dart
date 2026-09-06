@@ -1,134 +1,54 @@
 import 'package:flutter/material.dart';
 
-
 class PollQuestionCard extends StatelessWidget {
-
-
   final String question;
 
+  final Color darkText = const Color(0xff183B56);
 
-
-  final Color darkText =
-      const Color(0xff183B56);
-
-
-
-  const PollQuestionCard({
-
-    super.key,
-
-    required this.question,
-
-  });
-
-
-
-
+  const PollQuestionCard({super.key, required this.question});
 
   @override
   Widget build(BuildContext context) {
-
-
     return Container(
-
-
       width: double.infinity,
 
+      padding: const EdgeInsets.all(22),
 
-      padding:
-      const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(.92),
 
-
-
-      decoration:
-      BoxDecoration(
-
-
-        color:
-        Colors.white.withOpacity(.92),
-
-
-
-        borderRadius:
-        BorderRadius.circular(28),
-
-
+        borderRadius: BorderRadius.circular(28),
       ),
 
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
 
-
-
-      child:
-      Column(
-
-
-
-        crossAxisAlignment:
-        CrossAxisAlignment.start,
-
-
-
-        children:[
-
-
-
+        children: [
           Text(
-
             "Question",
 
-            style:
-            TextStyle(
+            style: TextStyle(
+              color: darkText.withOpacity(.55),
 
-              color:
-              darkText.withOpacity(.55),
-
-              fontWeight:
-              FontWeight.w600,
-
+              fontWeight: FontWeight.w600,
             ),
-
           ),
 
-
-
-
-
-          const SizedBox(height:8),
-
-
-
-
+          const SizedBox(height: 8),
 
           Text(
-
             question,
 
-            style:
-            TextStyle(
+            style: TextStyle(
+              color: darkText,
 
-              color:
-              darkText,
+              fontSize: 20,
 
-              fontSize:20,
-
-              fontWeight:
-              FontWeight.bold,
-
+              fontWeight: FontWeight.bold,
             ),
-
-          )
-
-
-
+          ),
         ],
-
       ),
-
-
     );
-
-
   }
-
-
 }

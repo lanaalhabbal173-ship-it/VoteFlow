@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-import 'package:polling_app/controllers/poll_conroller.dart';
-
+import '../../controllers/poll_conroller.dart';
 import '../../routes/app_routes.dart';
 
 class InstructorView extends StatefulWidget {
@@ -49,17 +48,119 @@ class _InstructorViewState extends State<InstructorView> {
         });
       }
     } catch (e) {
-      print("GET INSTRUCTOR NAME ERROR = $e");
+      print("GET NAME ERROR $e");
     }
+  }
+
+  void showDeleteDialog(poll) {
+    Get.dialog(
+      Dialog(
+        backgroundColor: Colors.transparent,
+
+        child: Container(
+          padding: const EdgeInsets.all(25),
+
+          decoration: BoxDecoration(
+            color: Colors.white,
+
+            borderRadius: BorderRadius.circular(30),
+          ),
+
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+
+            children: [
+              Container(
+                height: 70,
+
+                width: 70,
+
+                decoration: BoxDecoration(
+                  color: Colors.red.withOpacity(.1),
+
+                  shape: BoxShape.circle,
+                ),
+
+                child: const Icon(
+                  Icons.delete_outline,
+
+                  color: Colors.red,
+
+                  size: 40,
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              const Text(
+                "Delete Poll?",
+
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
+              ),
+
+              const SizedBox(height: 10),
+
+              const Text(
+                "Are you sure you want to delete this poll?",
+
+                textAlign: TextAlign.center,
+
+                style: TextStyle(color: Colors.grey),
+              ),
+
+              const SizedBox(height: 25),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+
+                      child: const Text("Cancel"),
+                    ),
+                  ),
+
+                  const SizedBox(width: 12),
+
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
+
+                      onPressed: () {
+                        Get.back();
+
+                        controller.deletePoll(poll.pollId);
+                      },
+
+                      child: const Text(
+                        "Delete",
+
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity,
+
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xffB8C9E8), Color(0xffEAF1F8)],
+            colors: [Color(0xffB8C9E8), Color(0xffF5F8FC)],
 
             begin: Alignment.topLeft,
 
@@ -75,24 +176,22 @@ class _InstructorViewState extends State<InstructorView> {
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
-                // HEADER
+                // HEADER CARD
                 Container(
-                  width: double.infinity,
-
                   padding: const EdgeInsets.all(25),
 
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(.9),
+                    color: Colors.white,
 
                     borderRadius: BorderRadius.circular(35),
 
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(.08),
+                        color: Colors.black.withOpacity(.06),
 
-                        blurRadius: 20,
+                        blurRadius: 25,
 
-                        offset: const Offset(0, 10),
+                        offset: const Offset(0, 12),
                       ),
                     ],
                   ),
@@ -115,10 +214,10 @@ class _InstructorViewState extends State<InstructorView> {
 
                               width: 45,
 
-                              decoration: const BoxDecoration(
-                                color: Color(0xffEAF1F8),
+                              decoration: BoxDecoration(
+                                color: const Color(0xffEAF1F8),
 
-                                shape: BoxShape.circle,
+                                borderRadius: BorderRadius.circular(15),
                               ),
 
                               child: Icon(Icons.logout_rounded, color: primary),
@@ -131,7 +230,9 @@ class _InstructorViewState extends State<InstructorView> {
                             width: 65,
 
                             decoration: BoxDecoration(
-                              color: primary,
+                              gradient: LinearGradient(
+                                colors: [primary, const Color(0xff69B3A8)],
+                              ),
 
                               shape: BoxShape.circle,
                             ),
@@ -147,7 +248,7 @@ class _InstructorViewState extends State<InstructorView> {
 
                                   fontSize: 28,
 
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w800,
                                 ),
                               ),
                             ),
@@ -161,7 +262,7 @@ class _InstructorViewState extends State<InstructorView> {
                         "Welcome Back 👋",
 
                         style: TextStyle(
-                          color: darkText.withOpacity(.6),
+                          color: darkText.withOpacity(.55),
 
                           fontSize: 16,
                         ),
@@ -175,18 +276,18 @@ class _InstructorViewState extends State<InstructorView> {
                         style: TextStyle(
                           color: darkText,
 
-                          fontSize: 30,
+                          fontSize: 32,
 
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
 
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 10),
 
-                      Text(
-                        "Create engaging polls for your students",
+                      const Text(
+                        "Manage your polls and interact with students",
 
-                        style: TextStyle(color: darkText.withOpacity(.65)),
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
                       ),
                     ],
                   ),
@@ -194,15 +295,13 @@ class _InstructorViewState extends State<InstructorView> {
 
                 const SizedBox(height: 30),
 
-                // CREATE POLL CARD
+                // CREATE POLL BUTTON CARD
                 GestureDetector(
                   onTap: () {
                     Get.toNamed(AppRoutes.createPoll);
                   },
 
                   child: Container(
-                    width: double.infinity,
-
                     padding: const EdgeInsets.all(25),
 
                     decoration: BoxDecoration(
@@ -224,52 +323,43 @@ class _InstructorViewState extends State<InstructorView> {
                     ),
 
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                       children: [
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-
-                          children: [
-                            Text(
-                              "Create New Poll",
-
-                              style: TextStyle(
-                                color: Colors.white,
-
-                                fontSize: 25,
-
-                                fontWeight: FontWeight.w800,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                "Create New Poll",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w900,
+                                ),
                               ),
-                            ),
 
-                            SizedBox(height: 8),
+                              SizedBox(height: 8),
 
-                            Text(
-                              "Engage your students instantly",
-
-                              style: TextStyle(color: Colors.white70),
-                            ),
-                          ],
+                              Text(
+                                "Start a live classroom interaction",
+                                style: TextStyle(color: Colors.white70),
+                              ),
+                            ],
+                          ),
                         ),
 
                         Container(
-                          height: 60,
-
-                          width: 60,
+                          height: 55,
+                          width: 55,
 
                           decoration: BoxDecoration(
                             color: Colors.white,
-
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(18),
                           ),
 
                           child: Icon(
                             Icons.add_rounded,
-
-                            size: 35,
-
                             color: primary,
+                            size: 30,
                           ),
                         ),
                       ],
@@ -283,30 +373,49 @@ class _InstructorViewState extends State<InstructorView> {
                   "My Polls",
 
                   style: TextStyle(
-                    fontSize: 25,
-
-                    fontWeight: FontWeight.w800,
-
                     color: darkText,
+
+                    fontSize: 26,
+
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
 
                 const SizedBox(height: 15),
 
+                // POLLS LIST
                 Obx(() {
                   if (controller.instructorPolls.isEmpty) {
                     return Container(
                       width: double.infinity,
 
-                      padding: const EdgeInsets.all(25),
+                      padding: const EdgeInsets.all(30),
 
                       decoration: BoxDecoration(
                         color: Colors.white,
 
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(30),
                       ),
 
-                      child: const Center(child: Text("No polls yet")),
+                      child: Column(
+                        children: [
+                          Icon(Icons.poll_outlined, size: 50, color: primary),
+
+                          const SizedBox(height: 15),
+
+                          Text(
+                            "No polls created yet",
+
+                            style: TextStyle(
+                              color: darkText,
+
+                              fontWeight: FontWeight.bold,
+
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   }
 
@@ -314,14 +423,44 @@ class _InstructorViewState extends State<InstructorView> {
                     children: controller.instructorPolls.map((poll) {
                       Color statusColor;
 
-                      if (poll.status == "waiting") {
-                        statusColor = Colors.orange;
-                      } else if (poll.status == "active") {
-                        statusColor = Colors.green;
-                      } else if (poll.status == "ended") {
-                        statusColor = Colors.red;
-                      } else {
-                        statusColor = Colors.blue;
+                      String statusText;
+
+                      IconData statusIcon;
+
+                      switch (poll.status) {
+                        case "waiting":
+                          statusColor = Colors.orange;
+
+                          statusText = "WAITING";
+
+                          statusIcon = Icons.schedule_rounded;
+
+                          break;
+
+                        case "active":
+                          statusColor = Colors.green;
+
+                          statusText = "LIVE NOW";
+
+                          statusIcon = Icons.circle;
+
+                          break;
+
+                        case "ended":
+                          statusColor = Colors.red;
+
+                          statusText = "ENDED";
+
+                          statusIcon = Icons.stop_circle_outlined;
+
+                          break;
+
+                        default:
+                          statusColor = Colors.blue;
+
+                          statusText = poll.status.toUpperCase();
+
+                          statusIcon = Icons.info_outline;
                       }
 
                       return GestureDetector(
@@ -329,23 +468,27 @@ class _InstructorViewState extends State<InstructorView> {
                           controller.openPoll(poll);
                         },
 
+                        onLongPress: () {
+                          showDeleteDialog(poll);
+                        },
+
                         child: Container(
-                          margin: const EdgeInsets.only(bottom: 15),
+                          margin: const EdgeInsets.only(bottom: 18),
 
                           padding: const EdgeInsets.all(22),
 
                           decoration: BoxDecoration(
                             color: Colors.white,
 
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(32),
 
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(.05),
+                                color: Colors.black.withOpacity(.06),
 
-                                blurRadius: 15,
+                                blurRadius: 20,
 
-                                offset: const Offset(0, 8),
+                                offset: const Offset(0, 10),
                               ),
                             ],
                           ),
@@ -354,6 +497,7 @@ class _InstructorViewState extends State<InstructorView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
 
                             children: [
+                              // TOP ROW
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -363,45 +507,86 @@ class _InstructorViewState extends State<InstructorView> {
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 12,
 
-                                      vertical: 6,
+                                      vertical: 7,
                                     ),
 
                                     decoration: BoxDecoration(
-                                      color: statusColor.withOpacity(.15),
+                                      color: statusColor.withOpacity(.12),
 
                                       borderRadius: BorderRadius.circular(20),
                                     ),
 
-                                    child: Text(
-                                      poll.status.toUpperCase(),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          statusIcon,
 
-                                      style: TextStyle(
-                                        color: statusColor,
+                                          size: 12,
 
-                                        fontWeight: FontWeight.bold,
+                                          color: statusColor,
+                                        ),
 
-                                        fontSize: 12,
-                                      ),
+                                        const SizedBox(width: 6),
+
+                                        Text(
+                                          statusText,
+
+                                          style: TextStyle(
+                                            color: statusColor,
+
+                                            fontWeight: FontWeight.w800,
+
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
 
-                                  Text(
-                                    poll.code,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        poll.code,
 
-                                    style: TextStyle(
-                                      color: primary,
+                                        style: TextStyle(
+                                          color: primary,
 
-                                      fontSize: 18,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w900,
 
-                                      fontWeight: FontWeight.bold,
+                                          letterSpacing: 2,
+                                        ),
+                                      ),
 
-                                      letterSpacing: 2,
-                                    ),
+                                      const SizedBox(width: 8),
+
+                                      Container(
+                                        height: 32,
+
+                                        width: 32,
+
+                                        decoration: BoxDecoration(
+                                          color: primary.withOpacity(.1),
+
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                        ),
+
+                                        child: Icon(
+                                          Icons.copy_rounded,
+
+                                          size: 16,
+
+                                          color: primary,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
 
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 22),
 
                               Text(
                                 poll.question,
@@ -413,32 +598,64 @@ class _InstructorViewState extends State<InstructorView> {
                                 style: TextStyle(
                                   color: darkText,
 
-                                  fontSize: 18,
+                                  fontSize: 19,
 
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
 
-                              const SizedBox(height: 15),
+                              const SizedBox(height: 20),
 
                               Row(
                                 children: [
-                                  Icon(
-                                    Icons.people_alt_rounded,
+                                  Expanded(
+                                    child: infoBox(
+                                      Icons.people_alt_rounded,
 
-                                    color: primary,
+                                      "${poll.participants}",
 
-                                    size: 20,
+                                      "Students",
+                                    ),
                                   ),
 
-                                  const SizedBox(width: 8),
+                                  const SizedBox(width: 12),
 
-                                  Text(
-                                    "${poll.participants} Students",
+                                  Expanded(
+                                    child: infoBox(
+                                      Icons.how_to_vote_rounded,
 
-                                    style: const TextStyle(color: Colors.grey),
+                                      "${poll.votes.values.fold(0, (a, b) => a + (b as int))}",
+
+                                      "Votes",
+                                    ),
                                   ),
                                 ],
+                              ),
+
+                              const SizedBox(height: 18),
+
+                              Container(
+                                width: double.infinity,
+
+                                height: 45,
+
+                                decoration: BoxDecoration(
+                                  color: primary,
+
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+
+                                child: const Center(
+                                  child: Text(
+                                    "View Poll  →",
+
+                                    style: TextStyle(
+                                      color: Colors.white,
+
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -447,10 +664,50 @@ class _InstructorViewState extends State<InstructorView> {
                     }).toList(),
                   );
                 }),
+
+                const SizedBox(height: 25),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget infoBox(IconData icon, String value, String title) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+
+      decoration: BoxDecoration(
+        color: const Color(0xffF5F8FA),
+
+        borderRadius: BorderRadius.circular(18),
+      ),
+
+      child: Row(
+        children: [
+          Icon(icon, color: primary, size: 22),
+
+          const SizedBox(width: 8),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: [
+              Text(
+                value,
+
+                style: TextStyle(color: darkText, fontWeight: FontWeight.bold),
+              ),
+
+              Text(
+                title,
+
+                style: const TextStyle(color: Colors.grey, fontSize: 12),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -470,8 +727,10 @@ class _InstructorViewState extends State<InstructorView> {
 
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(.10),
-                blurRadius: 20,
+                color: Colors.black.withOpacity(.1),
+
+                blurRadius: 25,
+
                 offset: const Offset(0, 10),
               ),
             ],
@@ -482,46 +741,41 @@ class _InstructorViewState extends State<InstructorView> {
 
             children: [
               Container(
-                height: 72,
-                width: 72,
+                height: 75,
 
-                decoration: const BoxDecoration(
-                  color: Color(0xffEAF1F8),
+                width: 75,
+
+                decoration: BoxDecoration(
+                  color: primary.withOpacity(.12),
 
                   shape: BoxShape.circle,
                 ),
 
-                child: const Icon(
-                  Icons.logout_rounded,
-
-                  color: Color(0xff3F8F83),
-
-                  size: 38,
-                ),
+                child: Icon(Icons.logout_rounded, color: primary, size: 40),
               ),
 
               const SizedBox(height: 20),
 
-              const Text(
+              Text(
                 "Logout?",
 
                 style: TextStyle(
-                  fontSize: 24,
+                  color: darkText,
 
-                  fontWeight: FontWeight.w800,
+                  fontSize: 25,
 
-                  color: Color(0xff183B56),
+                  fontWeight: FontWeight.w900,
                 ),
               ),
 
               const SizedBox(height: 10),
 
-              const Text(
+              Text(
                 "Are you sure you want to logout\nfrom your account?",
 
                 textAlign: TextAlign.center,
 
-                style: TextStyle(fontSize: 15, color: Colors.grey),
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 15),
               ),
 
               const SizedBox(height: 25),
@@ -531,24 +785,22 @@ class _InstructorViewState extends State<InstructorView> {
                   Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Color(0xff3F8F83)),
+                        side: BorderSide(color: primary),
 
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18),
                         ),
-
-                        padding: const EdgeInsets.symmetric(vertical: 15),
                       ),
 
                       onPressed: () {
                         Get.back();
                       },
 
-                      child: const Text(
+                      child: Text(
                         "Cancel",
 
                         style: TextStyle(
-                          color: Color(0xff183B56),
+                          color: darkText,
 
                           fontWeight: FontWeight.bold,
                         ),
@@ -561,15 +813,13 @@ class _InstructorViewState extends State<InstructorView> {
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff3F8F83),
+                        backgroundColor: primary,
 
                         elevation: 0,
 
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18),
                         ),
-
-                        padding: const EdgeInsets.symmetric(vertical: 15),
                       ),
 
                       onPressed: () {

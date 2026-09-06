@@ -97,45 +97,42 @@ class _SplashViewState extends State<SplashView>
 
                     children: [
                       Container(
-                        height: 120,
+                        height: 110,
 
-                        width: 120,
+                        width: 110,
+
+                        padding: const EdgeInsets.all(8),
 
                         decoration: BoxDecoration(
                           color: Colors.white,
 
-                          shape: BoxShape.circle,
-
-                          border: Border.all(
-                            color: Color(0xff3F8F83),
-
-                            width: 3,
-                          ),
+                          borderRadius: BorderRadius.circular(30),
 
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(.15),
+                              color: Colors.black.withOpacity(.12),
 
-                              blurRadius: 25,
+                              blurRadius: 20,
 
-                              offset: const Offset(0, 10),
+                              offset: const Offset(0, 8),
                             ),
                           ],
                         ),
 
-                        child: const Icon(
-                          Icons.checklist_rounded,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(22),
 
-                          size: 70,
+                          child: Image.asset(
+                            "assets/images/app_logo.png",
 
-                          color: Color(0xff3F8F83),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-
                       const SizedBox(height: 30),
 
                       const Text(
-                        "Polling Class",
+                        "VoteFlow",
 
                         style: TextStyle(
                           fontSize: 34,
@@ -148,7 +145,7 @@ class _SplashViewState extends State<SplashView>
                       const SizedBox(height: 10),
 
                       const Text(
-                        "Interactive learning made easy",
+                        "Real-time Classroom polling ",
 
                         style: TextStyle(fontSize: 16, color: Colors.black54),
                       ),

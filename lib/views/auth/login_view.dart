@@ -60,22 +60,18 @@ class LoginView extends StatelessWidget {
                     children: [
                       const SizedBox(height: 30),
 
-                      // LOGO
+                      // APP LOGO
                       Container(
-                        height: 90,
+                        height: 110,
 
-                        width: 90,
+                        width: 110,
+
+                        padding: const EdgeInsets.all(8),
 
                         decoration: BoxDecoration(
                           color: Colors.white,
 
-                          shape: BoxShape.circle,
-
-                          border: Border.all(
-                            color: Color(0xff3F8F83),
-
-                            width: 2,
-                          ),
+                          borderRadius: BorderRadius.circular(30),
 
                           boxShadow: [
                             BoxShadow(
@@ -88,12 +84,14 @@ class LoginView extends StatelessWidget {
                           ],
                         ),
 
-                        child: const Icon(
-                          Icons.checklist_rounded,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(22),
 
-                          size: 55,
+                          child: Image.asset(
+                            "assets/images/app_logo.png",
 
-                          color: Color(0xff3F8F83),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
 
@@ -119,7 +117,7 @@ class LoginView extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
 
-                          color: darkText.withOpacity(.65),
+                          color: darkText.withValues(alpha: .65),
                         ),
                       ),
 
@@ -132,6 +130,7 @@ class LoginView extends StatelessWidget {
 
                         icon: Icons.email_outlined,
                       ),
+
                       const SizedBox(height: 15),
 
                       buildField(
@@ -145,7 +144,6 @@ class LoginView extends StatelessWidget {
                       ),
 
                       const SizedBox(height: 30),
-
                       Obx(
                         () => SizedBox(
                           width: double.infinity,
@@ -155,6 +153,8 @@ class LoginView extends StatelessWidget {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primary,
+
+                              elevation: 0,
 
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(22),
@@ -176,7 +176,7 @@ class LoginView extends StatelessWidget {
                                     color: Colors.white,
                                   )
                                 : const Text(
-                                    "LOGIN",
+                                    "Login",
 
                                     style: TextStyle(
                                       color: Colors.white,
@@ -198,7 +198,7 @@ class LoginView extends StatelessWidget {
                         },
 
                         child: Text(
-                          "Create new account",
+                          "Create New Account",
 
                           style: TextStyle(
                             color: primary,
@@ -239,7 +239,7 @@ class LoginView extends StatelessWidget {
 
         filled: true,
 
-        fillColor: Colors.white.withOpacity(.9),
+        fillColor: Colors.white.withValues(alpha: .9),
 
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),

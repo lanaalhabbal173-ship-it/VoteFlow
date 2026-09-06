@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:polling_app/views/widget/instructor/option_input_card.dart';
 import 'package:polling_app/views/widget/instructor/poll_text_field.dart';
 
@@ -35,7 +36,13 @@ class _CreatePollViewState extends State<CreatePollView> {
 
   void removeOption(int index) {
     if (optionControllers.length <= 2) {
-      Get.snackbar("Warning", "Poll needs at least 2 options");
+      Get.snackbar(
+        "Warning",
+
+        "Poll needs at least 2 options",
+
+        backgroundColor: Colors.white,
+      );
 
       return;
     }
@@ -53,20 +60,26 @@ class _CreatePollViewState extends State<CreatePollView> {
         .where((e) => e.isNotEmpty)
         .toList();
 
-    controller.createPoll(question: questionController.text, options: options);
+    controller.createPoll(
+      question: questionController.text.trim(),
+
+      options: options,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity,
+
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xffB8C9E8), Color(0xffEAF1F8)],
+            colors: [Color(0xffF5F8FC), Color(0xffE8F3F1)],
 
-            begin: Alignment.topLeft,
+            begin: Alignment.topCenter,
 
-            end: Alignment.bottomRight,
+            end: Alignment.bottomCenter,
           ),
         ),
 
@@ -75,7 +88,10 @@ class _CreatePollViewState extends State<CreatePollView> {
             padding: const EdgeInsets.all(20),
 
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
+                // HEADER
                 Row(
                   children: [
                     GestureDetector(
@@ -88,18 +104,26 @@ class _CreatePollViewState extends State<CreatePollView> {
 
                         width: 45,
 
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: Colors.white,
 
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.circular(16),
+
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(.06),
+
+                              blurRadius: 15,
+                            ),
+                          ],
                         ),
 
                         child: Icon(
                           Icons.arrow_back_ios_new,
 
-                          color: primary,
-
                           size: 20,
+
+                          color: darkText,
                         ),
                       ),
                     ),
@@ -114,89 +138,221 @@ class _CreatePollViewState extends State<CreatePollView> {
 
                         fontSize: 28,
 
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+
+                // HERO CARD
+                Container(
+                  width: double.infinity,
+
+                  padding: const EdgeInsets.all(25),
+
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [primary, const Color(0xff69B3A8)],
+                    ),
+
+                    borderRadius: BorderRadius.circular(32),
+
+                    boxShadow: [
+                      BoxShadow(
+                        color: primary.withOpacity(.25),
+
+                        blurRadius: 20,
+
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                          children: [
+                            const Text(
+                              "Create Interactive Poll",
+
+                              style: TextStyle(
+                                color: Colors.white,
+
+                                fontSize: 23,
+
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+
+                            const SizedBox(height: 8),
+
+                            const Text(
+                              "Ask questions and engage your students instantly",
+
+                              style: TextStyle(
+                                color: Colors.white70,
+
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Container(
+                        height: 60,
+
+                        width: 60,
+
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+
+                        child: Icon(
+                          Icons.poll_rounded,
+
+                          color: primary,
+
+                          size: 32,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
+                // QUESTION CARD
+                Container(
+                  width: double.infinity,
+
+                  padding: const EdgeInsets.all(20),
+
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+
+                    borderRadius: BorderRadius.circular(28),
+
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(.05),
+
+                        blurRadius: 20,
+
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 40,
+
+                            width: 40,
+
+                            decoration: BoxDecoration(
+                              color: primary.withOpacity(.12),
+
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+
+                            child: Icon(
+                              Icons.help_outline_rounded,
+
+                              color: primary,
+                            ),
+                          ),
+
+                          const SizedBox(width: 12),
+
+                          Text(
+                            "Your Question",
+
+                            style: TextStyle(
+                              color: darkText,
+
+                              fontSize: 20,
+
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 18),
+
+                      PollTextField(
+                        controller: questionController,
+
+                        hint: "Enter your question",
+
+                        icon: Icons.edit_rounded,
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
+                // OPTIONS TITLE
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                  children: [
+                    Text(
+                      "Answer Options",
+
+                      style: TextStyle(
+                        color: darkText,
+
+                        fontSize: 22,
+
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+
+                        vertical: 6,
+                      ),
+
+                      decoration: BoxDecoration(
+                        color: primary.withOpacity(.12),
+
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+
+                      child: Text(
+                        "${optionControllers.length} Options",
+
+                        style: TextStyle(
+                          color: primary,
+
+                          fontSize: 12,
+
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
                 ),
 
-                const SizedBox(height: 30),
-
-                Container(
-                  height: 90,
-
-                  width: 90,
-
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-
-                    shape: BoxShape.circle,
-                    border: Border.all(color: primary, width: 2),
-                  ),
-
-                  child: Icon(
-                    Icons.checklist_rounded,
-
-                    size: 55,
-
-                    color: primary,
-                  ),
-                ),
-
-                const SizedBox(height: 25),
-
-                Text(
-                  "Create Interactive Poll",
-
-                  style: TextStyle(
-                    color: darkText,
-
-                    fontSize: 30,
-
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-
-                const SizedBox(height: 8),
-
-                Text(
-                  "Ask your students and collect responses",
-
-                  textAlign: TextAlign.center,
-
-                  style: TextStyle(color: darkText.withOpacity(.6)),
-                ),
-
-                const SizedBox(height: 35),
-
-                PollTextField(
-                  controller: questionController,
-
-                  hint: "Enter your question",
-
-                  icon: Icons.help_outline_rounded,
-                ),
-
-                const SizedBox(height: 30),
-
-                Align(
-                  alignment: Alignment.centerLeft,
-
-                  child: Text(
-                    "Answer Options",
-
-                    style: TextStyle(
-                      color: darkText,
-
-                      fontSize: 22,
-
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-
                 const SizedBox(height: 15),
 
+                // OPTIONS
                 ListView.builder(
                   shrinkWrap: true,
 
@@ -205,41 +361,131 @@ class _CreatePollViewState extends State<CreatePollView> {
                   itemCount: optionControllers.length,
 
                   itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 15),
 
-                      child: OptionInputCard(
-                        controller: optionControllers[index],
+                      decoration: BoxDecoration(
+                        color: Colors.white,
 
-                        hint: "Option ${index + 1}",
+                        borderRadius: BorderRadius.circular(25),
 
-                        onDelete: () {
-                          removeOption(index);
-                        },
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(.04),
+
+                            blurRadius: 15,
+
+                            offset: const Offset(0, 6),
+                          ),
+                        ],
+                      ),
+
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 55,
+
+                            width: 55,
+
+                            margin: const EdgeInsets.only(left: 12),
+
+                            decoration: BoxDecoration(
+                              color: primary.withOpacity(.12),
+
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+
+                            child: Center(
+                              child: Text(
+                                "${index + 1}",
+
+                                style: TextStyle(
+                                  color: primary,
+
+                                  fontSize: 20,
+
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          Expanded(
+                            child: OptionInputCard(
+                              controller: optionControllers[index],
+
+                              hint: "Option ${index + 1}",
+
+                              onDelete: () {
+                                removeOption(index);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   },
                 ),
 
-                OutlinedButton.icon(
-                  onPressed: addOption,
+                const SizedBox(height: 5),
 
-                  icon: Icon(Icons.add, color: primary),
+                // ADD OPTION
+                GestureDetector(
+                  onTap: addOption,
 
-                  label: Text("Add Option", style: TextStyle(color: primary)),
+                  child: Container(
+                    height: 55,
+
+                    width: double.infinity,
+
+                    decoration: BoxDecoration(
+                      color: primary.withOpacity(.08),
+
+                      borderRadius: BorderRadius.circular(20),
+
+                      border: Border.all(color: primary.withOpacity(.4)),
+                    ),
+
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.add_circle_outline, color: primary),
+
+                        const SizedBox(width: 8),
+
+                        Text(
+                          "Add Another Option",
+
+                          style: TextStyle(
+                            color: primary,
+
+                            fontWeight: FontWeight.bold,
+
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
 
-                const SizedBox(height: 30),
+                const SizedBox(height: 35),
 
+                // CREATE BUTTON
                 Obx(
                   () => SizedBox(
                     width: double.infinity,
 
-                    height: 60,
+                    height: 62,
 
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primary,
+
+                        elevation: 8,
+
+                        shadowColor: primary.withOpacity(.3),
+
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(22),
                         ),
@@ -249,20 +495,36 @@ class _CreatePollViewState extends State<CreatePollView> {
 
                       child: controller.isLoading.value
                           ? const CircularProgressIndicator(color: Colors.white)
-                          : const Text(
-                              "GENERATE POLL CODE",
+                          : const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
 
-                              style: TextStyle(
-                                color: Colors.white,
+                              children: [
+                                Icon(
+                                  Icons.rocket_launch_rounded,
 
-                                fontSize: 17,
+                                  color: Colors.white,
+                                ),
 
-                                fontWeight: FontWeight.bold,
-                              ),
+                                SizedBox(width: 10),
+
+                                Text(
+                                  "GENERATE POLL CODE",
+
+                                  style: TextStyle(
+                                    color: Colors.white,
+
+                                    fontSize: 17,
+
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                              ],
                             ),
                     ),
                   ),
                 ),
+
+                const SizedBox(height: 20),
               ],
             ),
           ),

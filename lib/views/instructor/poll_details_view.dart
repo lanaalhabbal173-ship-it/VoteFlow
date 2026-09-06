@@ -49,7 +49,7 @@ class PollDetailsView extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Get.back();
+                          Get.offNamed("/instructor");
                         },
 
                         child: Container(
@@ -144,13 +144,30 @@ class PollDetailsView extends StatelessWidget {
                         ),
 
                         ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
                           onPressed: () {
                             Share.share("Join Poll Code: ${poll.code}");
                           },
 
-                          icon: const Icon(Icons.share),
+                          icon: const Icon(
+                            Icons.share,
+                            color: Color(0xff3F8F83),
+                          ),
 
-                          label: const Text("SHARE CODE"),
+                          label: const Text(
+                            "SHARE CODE",
+                            style: TextStyle(
+                              color: Color(0xff3F8F83),
+
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -301,7 +318,7 @@ class PollDetailsView extends StatelessWidget {
           backgroundColor: color,
 
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
         onPressed: onTap,

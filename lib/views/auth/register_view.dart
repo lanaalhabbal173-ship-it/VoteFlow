@@ -67,26 +67,21 @@ class RegisterView extends StatelessWidget {
                   children: [
                     const SizedBox(height: 15),
 
-                    // CHECKLIST LOGO
                     Container(
-                      height: 90,
+                      height: 110,
 
-                      width: 90,
+                      width: 110,
+
+                      padding: const EdgeInsets.all(8),
 
                       decoration: BoxDecoration(
                         color: Colors.white,
 
-                        shape: BoxShape.circle,
-
-                        border: Border.all(
-                          color: const Color(0xff3F8F83),
-
-                          width: 2,
-                        ),
+                        borderRadius: BorderRadius.circular(30),
 
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(.12),
+                            color: Colors.black.withValues(alpha: .12),
 
                             blurRadius: 20,
 
@@ -95,15 +90,16 @@ class RegisterView extends StatelessWidget {
                         ],
                       ),
 
-                      child: const Icon(
-                        Icons.checklist_rounded,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(22),
 
-                        size: 55,
+                        child: Image.asset(
+                          "assets/images/app_logo.png",
 
-                        color: Color(0xff3F8F83),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-
                     const SizedBox(height: 25),
 
                     Text(
@@ -121,12 +117,12 @@ class RegisterView extends StatelessWidget {
                     const SizedBox(height: 8),
 
                     Text(
-                      "Join Polling Class Community",
+                      "Create Your VoteFlow account",
 
                       style: TextStyle(
                         fontSize: 16,
 
-                        color: darkText.withOpacity(.65),
+                        color: darkText.withValues(alpha: .65),
                       ),
                     ),
 
@@ -268,7 +264,7 @@ class RegisterView extends StatelessWidget {
                                   color: Colors.white,
                                 )
                               : const Text(
-                                  "CREATE ACCOUNT",
+                                  "Create Account",
 
                                   style: TextStyle(
                                     color: Colors.white,
@@ -283,6 +279,33 @@ class RegisterView extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Already Have An Account?",
+                          style: TextStyle(
+                            color: darkText.withValues(alpha: .65),
+                            fontSize: 15,
+                          ),
+                        ),
+
+                        TextButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+
+                          child: Text(
+                            "Sign In",
+                            style: TextStyle(
+                              color: primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -314,7 +337,7 @@ class RegisterView extends StatelessWidget {
 
         filled: true,
 
-        fillColor: Colors.white.withOpacity(.9),
+        fillColor: Colors.white.withValues(alpha: .9),
 
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
@@ -372,7 +395,7 @@ class RoleCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected
               ? const Color(0xff3F8F83)
-              : Colors.white.withOpacity(.7),
+              : Colors.white.withValues(alpha: .7),
 
           borderRadius: BorderRadius.circular(25),
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -153,6 +154,28 @@ class PollController extends GetxController {
     listenToCurrentPoll();
 
     Get.toNamed(AppRoutes.pollDetails);
+  }
+
+  Future<void> deletePoll(String pollId) async {
+    try {
+      await FirebaseDatabase.instance.ref("polls/$pollId").remove();
+
+      instructorPolls.removeWhere((poll) => poll.pollId == pollId);
+
+      Get.snackbar(
+        "Deleted",
+
+        "Poll deleted successfully",
+
+        backgroundColor: Colors.white,
+
+        colorText: const Color(0xff183B56),
+      );
+    } catch (e) {
+      Get.snackbar("Error", "Failed to delete poll");
+
+      print("DELETE POLL ERROR: $e");
+    }
   }
 
   // =========================
