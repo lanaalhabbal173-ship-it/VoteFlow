@@ -119,7 +119,7 @@ class EndedPoll extends StatelessWidget {
 
                   onTap:(){
 
-                    Get.back();
+                    Get.offAllNamed("/student");
 
                   },
 

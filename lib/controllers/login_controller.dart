@@ -4,29 +4,69 @@ import '../services/auth_service.dart';
 import '../routes/app_routes.dart';
 
 class LoginController extends GetxController {
+
   final AuthService authService = AuthService();
 
   var isLoading = false.obs;
 
-  Future<void> login({required String email, required String password}) async {
+
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
+
     try {
+
       isLoading.value = true;
 
-      final user = await authService.login(email: email, password: password);
+
+      final user = await authService.login(
+        email: email,
+        password: password,
+      );
+
 
       if (user == null) {
-        Get.snackbar("Error", "Invalid email or password");
+
+        Get.snackbar(
+          "Error",
+          "Invalid email or password",
+        );
 
         return;
+
       }
 
+
+
       if (user.role == "instructor") {
-        Get.offAllNamed(AppRoutes.instructor);
+
+
+        Get.offAllNamed(
+          AppRoutes.instructor,
+          arguments: user.name,
+        );
+
+
       } else {
-        Get.offAllNamed(AppRoutes.student);
+
+
+        Get.offAllNamed(
+          AppRoutes.student,
+          arguments: user.name,
+        );
+
+
       }
+
+
+
     } finally {
+
       isLoading.value = false;
+
     }
+
   }
+
 }

@@ -14,7 +14,7 @@ class StudentView extends StatefulWidget {
 }
 
 class _StudentViewState extends State<StudentView> {
-  String studentName = "Student";
+  String studentName = "";
 
   final Color primary = const Color(0xff3F8F83);
 
@@ -23,7 +23,7 @@ class _StudentViewState extends State<StudentView> {
   @override
   void initState() {
     super.initState();
-
+    studentName = Get.arguments ?? "Student";
     getStudentName();
   }
 

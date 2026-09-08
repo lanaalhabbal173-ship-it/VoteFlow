@@ -17,7 +17,7 @@ class InstructorView extends StatefulWidget {
 class _InstructorViewState extends State<InstructorView> {
   final PollController controller = Get.put(PollController());
 
-  String instructorName = "Instructor";
+  String instructorName = "";
 
   final Color primary = const Color(0xff3F8F83);
 
@@ -28,6 +28,7 @@ class _InstructorViewState extends State<InstructorView> {
     super.initState();
 
     controller.getInstructorPolls();
+    instructorName = Get.arguments ?? "Instructor";
 
     getInstructorName();
   }

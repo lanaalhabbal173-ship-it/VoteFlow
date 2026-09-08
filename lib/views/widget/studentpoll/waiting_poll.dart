@@ -36,7 +36,7 @@ class WaitingPoll extends StatelessWidget {
 
                 child: GestureDetector(
                   onTap: () {
-                    Get.back();
+                    Get.offAllNamed("/student");
                   },
 
                   child: Container(
